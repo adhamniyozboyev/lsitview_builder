@@ -14,45 +14,60 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
-  List<Widget> data = [];
-  TextEditingController controller = TextEditingController();
+  List<String> names = [
+    'Samarqand',
+    'Toshkent',
+    'Jizzax',
+    'Namangan',
+    'Buxoro',
+    'Xorazm',
+    'Farg\'ona',
+    'Navoiy',
+    'Andijon',
+    'Sirdaryo',
+    'Qashqadaryo',
+    'Surxondaryo'
+  ];
+  TextEditingController _controller = TextEditingController();
+  // List<Widget> lst = List.generate(10, (index) => ListTile(title: Text('${index + 1}'),));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, int index) {
-          return Column(
-            children: [
-              ListTile(
-                leading: IconButton(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: _controller,
+              onSubmitted: (value) {
+                setState(() {
+                  names.add(value);
+                  value = '';
+                });
+              },
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _controller.text.length > 0
+                    ? int.parse(_controller.text)
+                    : 0,
+                itemBuilder: (context, index) => ListTile(
+                  leading: Text('${index + 1}'),
+                  title: Text('${names[index]}'),
+                  trailing: IconButton(
                     onPressed: () {
-                      if (controller.text != '') {
                       setState(() {
-                          data.add(ListTile(
-                          leading: IconButton(
-                              onPressed: () {}, icon: Icon(Icons.add_a_photo)),
-                              title: Text(controller.text),
-                              trailing: Icon(Icons.delete),
-                        ));
+                        names.removeAt(index);
                       });
-                      }
                     },
-                    icon: Icon(Icons.add_box)),
-                title: TextField(
-                  controller: controller,
-                  decoration: InputDecoration(border: OutlineInputBorder()),
+                    icon: Icon(Icons.delete),
+                  ),
                 ),
-                trailing: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.delete_forever_rounded),
-                ),
-                
               ),
-              Column(children: data,)
-            ],
-          );
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
