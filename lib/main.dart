@@ -34,7 +34,7 @@ class _MyWidgetState extends State<MyWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Go to Uzbekistan')),
+      appBar: AppBar(title: Text('Welcome Uzbekistan')),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
